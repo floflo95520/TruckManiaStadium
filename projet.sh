@@ -5,7 +5,7 @@ help=0
 
 if [ $nb_arguments -eq 0 ];
 then
-	echo "Aucun argument detecte."
+	echo "Erreur. Aucun argument detecte."
 	exit 1
 fi
 
@@ -41,12 +41,38 @@ else
 	else 
 	for (( k=2 ; k<=nb_arguments ; k++ )) do
 		case ${!k} in
-			-d1) echo "option d1" ;;
-			-d2) echo "option d2" ;;
-			-l) echo "option l";;
-			-t) echo "option t";;
-			-s) echo "option s";;
-			*) echo "opérateur ${!k} non reconnu.";; 
+-d1) 
+awk -F';' '!seen[$1,$6]++ { count[$6]++ } END {for (name in count) print count[name],";" name}' $1 data.csv | sort -r -n -k1,1 | head -n10 > datad1_sorted.csv 
+/usr/bin/time -f "%e" awk -F';' '!seen[$1,$6]++ { count[$6]++ } END {for (name in count) print count[name],";" name}' $1 data.csv | sort -r -n -k1,1 | head -n10 > /dev/null 
+gnuplot << EOF
+reset
+set terminal pngcairo size 800,1200 enhanced font "arial,12"
+set output "Résultats_d1tmp.png"
+set boxwidth 0.75
+set xlabel "Conducteurs"
+set y2label "Nombre de trajets"
+set ylabel "Nombre de trajets par conducteurs"
+set style data histogram
+set style fill solid 1.0 border
+set style histogram rowstacked
+set xtics rotate 
+set y2tics rotate
+set yrange [0:250]
+set datafile separator ";"
+plot for [COL=1:2] "datad1_sorted.csv" using COL:xticlabel(2) lc rgb "blue" 
+EOF
+convert Résultats_d1tmp.png -rotate 90 Résultats_d1.png
+;;
+
+
+-d2) 
+awk -F';' '{ count[$6] += $5 } END {for (name in count) print count[name],";" name}' $5 data.csv | sort -r -n -k1,1 | head -n10 > datad2_sorted.csv ;;
+
+-l) 
+awk -F';' '{ count[$1] += $5 } END {for (num in count) print count[num],";" num}' $5  data.csv | sort -r -n -k1,1 | head -n10 > datal_sorted.csv ;;
+			-t) echo "option t" ;;
+			-s) echo "option s" ;;
+			*) echo "opérateur ${!k} non reconnu." ;; 
 		esac
 	done
 	fi

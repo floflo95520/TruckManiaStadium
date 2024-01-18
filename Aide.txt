@@ -12,3 +12,5 @@ option -s : trie en fonction de la distance minimale, maximale et moyenne de cha
 
 En espérant que cette aide vous ait été utile.
 Bonne journée.
+
+

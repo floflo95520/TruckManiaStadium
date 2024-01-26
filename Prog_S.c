@@ -358,8 +358,13 @@ tmp=tmp->suivant;
 }
 }
 
-
-
+void liberermemoire(Ptrajet t){
+  if(t!=NULL){
+  liberermemoire(t->fg);
+  liberermemoire(t->fd);
+  free(t);
+}
+}
 
 
 
@@ -389,6 +394,8 @@ int i=0;
 recup50premieresvaleurs(&f1,trajet,&i);
 
 remplirfichier(&f1);
+liberermemoire(t);
+liberermemoire(trajet);
 
 
 return 0;

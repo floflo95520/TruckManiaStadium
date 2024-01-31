@@ -8,6 +8,9 @@
 
 #define TAILLE 100
 
+
+//Algorithme pour l'équilibrage de l'Avl (Avl) et de l'Avl (Avl2) contenu dans le premier Avl
+
 Avl* rotationGauche(Avl* a){
     if (a==NULL){
         printf("hi");

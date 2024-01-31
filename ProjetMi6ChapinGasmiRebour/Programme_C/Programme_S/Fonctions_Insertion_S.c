@@ -12,6 +12,7 @@ Ptrajet creerNoeud(int NouveauId, float distance){
   printf("Erreur d'allocation mémoire.");
   exit(1);
   }
+  //On initialise les variables de la structure
   n->Id=NouveauId;
   n->max=distance;
   n->min=distance;
@@ -31,6 +32,7 @@ if(n==NULL){
 printf("Problème d'allocation mémoire. Fin du programme.");
 exit(2);
 }
+//On initialise les variables de la structure
 n->Id=NouveauId;
 n->max=Nvmax;
 n->min=Nvmin;
@@ -58,7 +60,7 @@ Ptrajet insertAvl( Ptrajet t, int NumId, float NewDistance, int *h ){
   else if(NumId > t->Id){
   t->fd=insertAvl(t->fd,NumId,NewDistance, h);
   }
-  else{
+  else{ // Si le noeud correspondant au trajet a déjà été créé, alors on met ses valeurs à jour avec les données récupérées dans le fichier data.csv
   *h=0;
   if(NewDistance > t->max){
   t->max=NewDistance;
@@ -100,7 +102,7 @@ Ptrajet insertAvlSecond(Ptrajet a, Ptrajet b, int *h){
   else if(b->max_min > a->max_min){
     a->fd=insertAvlSecond(a->fd,b,h);
   }
-  else{
+  else{ //S'il y a un doublon, alors on ne fait rien
   *h=0;
   return a;
   }

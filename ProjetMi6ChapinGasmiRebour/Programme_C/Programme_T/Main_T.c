@@ -39,6 +39,7 @@ void fileDansFichier(File * f){
     Avl * tmp;
 
 while(f->debut!=NULL){
+//On insère les valeurs de la file dans le fichier
 defiler(f,&tmp);
 fprintf(fichier,"%s;%d;%d\n",tmp->nom,tmp->count,tmp->departCount);
 }
@@ -46,16 +47,7 @@ fclose(fichier);
 
 }
 
-void infixe(Avl* a) {
-    //infix display
-    if (a!=NULL) {
-        infixe(a->fg);
-        printf("%s;%d;%d\n", a->nom, a->count, a->departCount);
-        //fprintf(file_final,"%d;%.4f;%.4f;%.4f;%.4f\n",a->routeID, a->min, a->moy, a->max, a->max_miness_min);
-        infixe(a->fd);
-    }
-    //tail -50 final_file.txt | tac
-}
+
 
 void liberermemoire(Avl * a){
   if(a!=NULL){
@@ -66,24 +58,30 @@ void liberermemoire(Avl * a){
 }
 
 int main(int argc,char ** argv){
-    int nb_lignes=atoi(argv[1]);
+    int nb_lignes=atoi(argv[1]); // On récupère le nombre de lignes passé en argument lors de l'exécution du programme
     Avl * premierAvl=NULL;
+    //On construit le premier avl qui récupère chaque ville et le nombre de fois qu'elle est traversée + le nombre de fois qu'elle apparait en ville de départ
     premierAvl=construireAvl(premierAvl,nb_lignes);
-    //infixe(premierAvl);
     File f={NULL,NULL};
-    enfilerArbre(premierAvl,&f);
+    //On met le premier Avl dans une file
+    avlDansFile(premierAvl,&f);
     Avl * secondAvl=NULL;
+    //On va creer le second Avl qui sera trié en fonction du nombre de fois qu'une ville est traversée, à l'aide de la file qui contient le premier Avl
     secondAvl=SecondAvl(&f);
-    //infixe(secondAvl);
     int i=0;
+    //On récupère à l'aide d'une file les 10 villes qui ont été le plus traversées du second Avl
     recup10premieresvaleurs(secondAvl,&f,&i);
     Avl* troisiemeAvl=NULL;
+    //On crée alors le dernier Avl qui va contenir les 10 villes les plus traversées qui seront triées par ordre alphabétique
     troisiemeAvl=Avl10premieresvilles(troisiemeAvl,&f);
-    //infixe(troisiemeAvl);
+    //On met cet Avl dans une file
     avlDansFile(troisiemeAvl,&f);
+    //A l'aide de cette file on écrit les données dans un nouveau fichier .csv
     fileDansFichier(&f);
+    //On libère le premier, le second et le troisième Avl dès que les données sont bien inscrites dans le fichier .csv
     liberermemoire(premierAvl);
     liberermemoire(secondAvl);
+    liberermemoire(troisiemeAvl);
 
 
 

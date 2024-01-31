@@ -4,9 +4,9 @@ CHEMIN_O_T = Fichiers_o_T
 CHEMIN_T = Programme_T
 CHEMIN_S = Programme_S
 SRC_S = $(wildcard $(CHEMIN_S)/*.c)
-OBJ_S = $(patsubst $(CHEMIN_S)/%.c, $(CHEMIN_O_S)/%.o, $(SRC_S))
+OBJ_S = $(SRC_S:.c=.o)
 SRC_T = $(wildcard $(CHEMIN_T)/*.c)
-OBJ_T = $(patsubst $(CHEMIN_T)/%.c, $(CHEMIN_O_T)/%.o, $(SRC_T))
+OBJ_T = $(SRC_T:.c=.o)
 CFLAGS = -Wall -Werror
 
 
@@ -27,7 +27,7 @@ ProgT: $(OBJ_T)
 	$(CC) $(CFLAGS) $^ -o $@ -lm
 
 clean :
-	rm -f $(CHEMIN_O_S)/*.o $(CHEMIN_O_T)/*.o
+	rm -f $(CHEMIN_O_S)/*.o $(CHEMIN_O_T)/*.o $(CHEMIN_S)/*.o $(CHEMIN_T)/*.o 
 
 
 

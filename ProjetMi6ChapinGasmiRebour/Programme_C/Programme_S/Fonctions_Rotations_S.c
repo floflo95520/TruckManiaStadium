@@ -6,6 +6,7 @@
 
 #include "Main_S.h"
 
+//Algorithme permettant l'équilibrage d'un Avl
 
 Ptrajet rotationGauche(Ptrajet t){
   if(t==NULL){

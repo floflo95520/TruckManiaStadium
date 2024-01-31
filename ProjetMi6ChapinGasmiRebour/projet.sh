@@ -1,5 +1,5 @@
 #!/bin/bash
-
+chmod 777 projet.sh
 nb_arguments=$#
 help=0
 
@@ -135,10 +135,16 @@ EOF
 
 -s) 
 echo "Option -s :"
+if [ ! -d Programme_C/Fichiers_o_S ];
+then
+	cd Programme_C
+	mkdir Fichiers_o_S
+	cd ..
+fi
 AVANT=$(date +%s)
 cut -d';' -f1,5 $1 | sed 's/;/ /g' | tail -n +2 > fichierstemporaires/data_s.txt
 t=`wc -l fichierstemporaires/data_s.txt | cut -d' ' -f1`
-if [ ! -e ProgS ];
+if [ ! -e Programme_C/ProgS ];
 then
 	cd Programme_C
 	make ProgS >> make.txt
@@ -170,11 +176,17 @@ rm Programme_C/ProgS
 ;;
 			
 -t) 
-echo "Option -t :" 
+echo "Option -t :"
+if [ ! -d Programme_C/Fichiers_o_T ];
+then
+	cd Programme_C
+	mkdir Fichiers_o_T
+	cd ..
+fi
 AVANT=$(date +%s)
 cut -d';' -f1-4 $1 | sed 's/ /-/g' | sed 's/;/ /g' | tail -n +2 > fichierstemporaires/data_t.txt
 t=`wc -l fichierstemporaires/data_t.txt | cut -d' ' -f1`
-if [ ! -e ProgT ];
+if [ ! -e Programme_C/ProgT ];
 then
 	cd Programme_C
 	make ProgT >> make.txt

@@ -16,7 +16,7 @@ int i=0;
 int TmpId=0;
 float TmpDistance=0;
 
-
+//On récupère la première ligne afin de créer le premier noeud de l'Avl
 int r=fscanf(f,"%d %f", &TmpId, &TmpDistance);
 if(r!=2){
   printf("Erreur lors de la récupération des données. Fin du programme");
@@ -25,7 +25,7 @@ if(r!=2){
 t=creerNoeud(TmpId,TmpDistance);
 i=1;
 int eq=t->equilibre;
-
+//on insère les valeurs dans l'Avl jusqu'à ce qu'il ne reste plus rien à insérer
 while(i!=N){
 r=fscanf(f,"%d %f", &TmpId, &TmpDistance);
 if(r!=2){
@@ -36,6 +36,7 @@ t=insertAvl(t,TmpId,TmpDistance,&eq);
 
 i++;
 }
+//On ferme le fichier
 fclose(f);
 return t;
 }
@@ -45,11 +46,12 @@ Ptrajet secondAvl(Ptrajet t, File * f){
   printf("Erreur de file. Fin du programme");
   exit(12);
   }
+  //On crée l'Avl à partir du premier chainon de la file
   Ptrajet temp;
   defiler(f,&temp);
   t=creerNoeudSecond(temp->Id,temp->max,temp->min,temp->max_min,temp->somme,temp->count,temp->moyenne);
   int h;
-  
+  //On insère chaque chainon dans le second Avl jusqu'à ce que la file soit vide
   while(f->tete!=NULL){
   defiler(f,&temp);
   h=t->equilibre;

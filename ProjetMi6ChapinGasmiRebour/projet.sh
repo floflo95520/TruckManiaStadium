@@ -168,9 +168,9 @@ set datafile separator ';'
 plot 'fichierstemporaires/data_s.csv' using 0:3:5:xticlabel(2) with filledcurves linecolor 2 title 'Distance (Km)',\
 ''using 0:4 with lines linecolor 0 title 'Distance moyenne (Km)'
 EOF
-#rm fichierstemporaires/data_s.txt
+rm fichierstemporaires/data_s.txt
 #rm fichierstemporaires/data_s.csv
-#display images/Résultats_s.png
+
 rm Programme_C/make.txt
 rm Programme_C/ProgS
 ;;
@@ -195,7 +195,6 @@ then
 fi
 ./Programme_C/ProgT $t
 sed 's/-/ /g' fichierstemporaires/data_t_temp.csv > fichierstemporaires/data_t.csv
-
 APRES=$(date +%s)
 TEMPS=$(echo "$APRES - $AVANT" | bc)
 echo "Le temps de traitement est de $TEMPS seconde(s)"
@@ -215,6 +214,8 @@ set boxwidth 4
 set datafile separator ';'
 plot 'fichierstemporaires/data_t.csv' using 2:xtic(1) linecolor 2 title 'Nombre de trajets', '' using 3 linecolor 9 title 'Départs trajets'
 EOF
+rm fichierstemporaires/data_t_temp.csv
+rm fichierstemporaires/data_t.txt
 rm Programme_C/make.txt
 rm Programme_C/ProgT
 ;;

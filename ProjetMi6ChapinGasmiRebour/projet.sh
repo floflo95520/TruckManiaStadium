@@ -22,7 +22,8 @@ done
 if [ -e fichierstemporaires ];
 then
 	cd fichierstemporaires
-	rm * -r
+	rm * -r 2> fichiertempdéjàvide.txt
+	rm fichiertempdéjàvide.txt
 	cd ..
 else 
 	echo "Dossier 'fichierstemporaires' créé"
@@ -41,7 +42,7 @@ if [ $help -eq 1 ];then
 	cat Aide.txt
 else 
 	if [ ! -f $1 ]; then
-		echo "Erreur. Le premier argument n'est pas un fichier."
+		echo "Erreur. Le premier argument n'est pas un fichier ou n'existe pas."
 	else 
 	for (( k=2 ; k<=nb_arguments ; k++ )) do
 		case ${!k} in
@@ -139,7 +140,10 @@ cut -d';' -f1,5 $1 | sed 's/;/ /g' | tail -n +2 > fichierstemporaires/data_s.txt
 t=`wc -l fichierstemporaires/data_s.txt | cut -d' ' -f1`
 if [ ! -e ProgS ];
 then
-	gcc -o Programme_C/ProgS Programme_C/Prog_S.c -lm
+	cd Programme_C
+	make ProgS >> make.txt
+	make clean >> make.txt
+	cd ..
 fi
 ./Programme_C/ProgS $t
 APRES=$(date +%s)
@@ -161,6 +165,8 @@ EOF
 #rm fichierstemporaires/data_s.txt
 #rm fichierstemporaires/data_s.csv
 #display images/Résultats_s.png
+rm Programme_C/make.txt
+rm Programme_C/ProgS
 ;;
 			
 -t) 
@@ -170,7 +176,10 @@ cut -d';' -f1-4 $1 | sed 's/ /-/g' | sed 's/;/ /g' | tail -n +2 > fichierstempor
 t=`wc -l fichierstemporaires/data_t.txt | cut -d' ' -f1`
 if [ ! -e ProgT ];
 then
-	gcc -o Programme_C/ProgT Programme_C/Prog_T.c -lm
+	cd Programme_C
+	make ProgT >> make.txt
+	make clean >> make.txt
+	cd ..
 fi
 ./Programme_C/ProgT $t
 sed 's/-/ /g' fichierstemporaires/data_t_temp.csv > fichierstemporaires/data_t.csv
@@ -194,6 +203,8 @@ set boxwidth 4
 set datafile separator ';'
 plot 'fichierstemporaires/data_t.csv' using 2:xtic(1) linecolor 2 title 'Nombre de trajets', '' using 3 linecolor 9 title 'Départs trajets'
 EOF
+rm Programme_C/make.txt
+rm Programme_C/ProgT
 ;;
 			
 *) echo "Option ${!k} non reconnue." 
@@ -202,3 +213,6 @@ EOF
 	done
 	fi
 fi
+
+
+

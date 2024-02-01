@@ -2,7 +2,7 @@
 
 Bonjour, bienvenue dans notre projet TruckManiaStadium
 
-Notre projet se constitue ainsi : le fichier shell qui est la racine du projet (projet.sh), un fichier texte contenant un message d'aide (Aide.txt) et un dossier contenant le makefile et deux sous-dossiers contenant respectivement les options s et t.
+Notre projet se constitue ainsi : le fichier shell qui est la racine du projet (projet.sh), un fichier texte contenant un message d'aide (Aide.txt) et un dossier contenant le makefile et deux sous-dossiers contenant respectivement les options s et t. Il y a un également un fichier demo mais celui-ci sert uniquement à montrer les résultats que le programme génère à partir du fichier de données passé en argument.
 
 Ce projet peut réaliser jusqu'à 5 traitements différents : l'option -d1, l'option -d2, l'option -l, l'option -s, l'option -t et l'option h
 

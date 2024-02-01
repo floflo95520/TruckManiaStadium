@@ -150,7 +150,7 @@ fi
 if [ ! -e Programme_C/ProgS ];
 then
 	cd Programme_C
- 	touche make.txt
+ 	touch make.txt
 	make ProgS >> make.txt
 	make clean >> make.txt
 	rm make.txt

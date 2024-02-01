@@ -150,9 +150,10 @@ fi
 if [ ! -e Programme_C/ProgS ];
 then
 	cd Programme_C
+ 	touche make.txt
 	make ProgS >> make.txt
 	make clean >> make.txt
-	rm Programme_C/make.txt
+	rm make.txt
 	cd ..
 fi
 AVANT=$(date +%s)
@@ -196,9 +197,10 @@ fi
 if [ ! -e Programme_C/ProgT ];
 then
 	cd Programme_C
+ 	touch make.txt
 	make ProgT >> make.txt
 	make clean >> make.txt
-	rm Programme_C/make.txt
+	rm make.txt
 	cd ..
 fi
 AVANT=$(date +%s)

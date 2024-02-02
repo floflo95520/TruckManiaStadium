@@ -78,7 +78,7 @@ set ytics rotate
 set autoscale y
 set yrange [0:*]
 set datafile separator ";"
-plot for [COL=1:1] "fichierstemporaires/data_d1.csv" using COL:xticlabel(2) linecolor 1 title "Nombre de trajets par conducteur"
+plot for [COL=1:1] "fichierstemporaires/data_d1.csv" using COL:xticlabel(2) linecolor 7 title "Nombre de trajets par conducteur"
 EOF
 convert images/Résultats_d1tmp.png -rotate 90 images/Résultats_d1.png
 rm images/Résultats_d1tmp.png
@@ -112,7 +112,7 @@ set ytics rotate
 set autoscale y
 set yrange [0:*]
 set datafile separator ";"
-plot for [COL=1:1] "fichierstemporaires/data_d2.csv" using COL:xticlabel(2) linecolor 3 title "Distance pour chaque conducteur"
+plot for [COL=1:1] "fichierstemporaires/data_d2.csv" using COL:xticlabel(2) linecolor 6 title "Distance pour chaque conducteur"
 EOF
 convert images/Résultats_d2tmp.png -rotate 90 images/Résultats_d2.png
 rm images/Résultats_d2tmp.png

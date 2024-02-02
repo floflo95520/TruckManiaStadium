@@ -18,4 +18,8 @@ De plus, si l'on veut obtenir de l'aide, il faut donc entrer l'option -h dans le
 
 Pour obtenir de plus amples informations sur les différentes options disponible, nous vous invitons à lancer l'exécution du script shell et d'entrer l'option -h qui pourra vous renseigner sur ces dernières.
 
+IMPORTANT : Pour le bon fonctionnement du programme, vous aurez besoin de télécharger les packages suivants :
+- imagemagick (sudo apt install imagemagick)
+- gnuplot (sudo apt install gnuplot)
+
 Nous vous souhaitons une bonne journée :)

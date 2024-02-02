@@ -2,9 +2,16 @@
 nb_arguments=$#
 help=0
 
+#Code qui va permettre de changer les couleurs (Chatgpt)
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+NC='\033[0m' # Couleur de base
+
 if [ $nb_arguments -eq 0 ];
 then
-	echo "Erreur. Aucun argument detecte."
+	echo -e "${RED}Erreur. Aucun argument detecte.${NC}"
 	exit 1
 fi
 
@@ -25,14 +32,14 @@ then
 	rm fichiertempdéjàvide.txt
 	cd ..
 else #si le dossier n'existe pas alors on le crée
-	echo "Dossier 'fichierstemporaires' créé"
+	echo -e "${YELLOW}Création du dossier 'fichierstemporaires' en cours...${NC}"
 	mkdir fichierstemporaires
 fi
 
 #si le dossier images n'existe pas alors on le crée
 if [ ! -e images ];
 then
-	echo "Dossier 'images' créé"
+	echo -e "${YELLOW}Création du dossier 'images' en cours...${NC}"
 	mkdir images
 fi
 
@@ -42,7 +49,7 @@ if [ $help -eq 1 ];then
 	cat Aide.txt
 else 
 	if [ ! -f $1 ]; then
-		echo "Erreur. Le premier argument n'est pas un fichier ou n'existe pas."
+		echo -e "${RED}Erreur. Le premier argument n'est pas un fichier ou n'existe pas.${NC}"
 	else 
 	for (( k=2 ; k<=nb_arguments ; k++ )) do
 		case ${!k} in
@@ -53,7 +60,7 @@ AVANT=$(date +%s)
 awk -F';' '!seen[$1,$6]++ { count[$6]++ } END {for (name in count) print count[name],";" name}' $1 | sort -r -n -k1,1 | head -n10 > fichierstemporaires/data_d1.csv 
 APRES=$(date +%s)
 TEMPS=$(echo "$APRES - $AVANT" | bc)
-echo "Le temps de traitement est de $TEMPS seconde(s)"
+echo -e "${GREEN}Option ${!k} terminée.${BLUE} Le temps de traitement est de $TEMPS seconde(s)${NC}"
 #programme pour générer le graphique
 gnuplot << EOF
 reset
@@ -86,7 +93,7 @@ AVANT=$(date +%s)
 LC_NUMERIC=en_US.UTF-8 awk -F';' '{ count[$6] += $5 } END {for (name in count) print count[name],";" name}' $1 | sort -r -n -k1,1 | head -n10 > fichierstemporaires/data_d2.csv 
 APRES=$(date +%s)
 TEMPS=$(echo "$APRES - $AVANT" | bc)
-echo "Le temps de traitement est de $TEMPS seconde(s)"
+echo -e "${GREEN}Option ${!k} terminée.${BLUE} Le temps de traitement est de $TEMPS seconde(s)${NC}"
 #programme pour générer le graphique
 gnuplot << EOF
 reset
@@ -118,7 +125,7 @@ AVANT=$(date +%s)
 LC_NUMERIC=en_US.UTF-8 awk -F';' '{ count[$1] += $5 } END {for (num in count) print count[num],";" num}' $1 | sort -r -n -t';' -k1,1 | head -n10 | sort -r -n -t';' -k2,2 > fichierstemporaires/data_l.csv
 APRES=$(date +%s)
 TEMPS=$(echo "$APRES - $AVANT" | bc)
-echo "Le temps de traitement est de $TEMPS seconde(s)"
+echo -e "${GREEN}Option ${!k} terminée.${BLUE} Le temps de traitement est de $TEMPS seconde(s)${NC}"
 gnuplot << EOF
 reset
 set terminal pngcairo size 800,800 enhanced font "arial,12"
@@ -165,7 +172,7 @@ t=`wc -l fichierstemporaires/data_s.txt | cut -d' ' -f1`
 ./Programme_C/ProgS $t
 APRES=$(date +%s)
 TEMPS=$(echo "$APRES - $AVANT" | bc)
-echo "Le temps de traitement est de $TEMPS seconde(s)"
+echo -e "${GREEN}Option ${!k} terminée.${BLUE} Le temps de traitement est de $TEMPS seconde(s)${NC}"
 #programme pour générer le graphique
 gnuplot << EOF
 reset
@@ -213,7 +220,7 @@ t=`wc -l fichierstemporaires/data_t.txt | cut -d' ' -f1`
 sed 's/-/ /g' fichierstemporaires/data_t_temp.csv > fichierstemporaires/data_t.csv
 APRES=$(date +%s)
 TEMPS=$(echo "$APRES - $AVANT" | bc)
-echo "Le temps de traitement est de $TEMPS seconde(s)"
+echo -e "${GREEN}Option ${!k} terminée.${BLUE} Le temps de traitement est de $TEMPS seconde(s)${NC}"
 #programme pour générer le graphique
 gnuplot << EOF
 reset
